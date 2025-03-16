@@ -23,8 +23,8 @@ answers = [
 ]
 # Índice de la respuesta correcta para cada pregunta, el el mismo orden que las preguntas
 correct_answers_index = [1, 2, 0, 3, 1]
-# lista de tuples que tiene pregunta, respuestas posibles e índice de la respuesta correcta
-questions_to_ask = random.choices(list(zip(questions, answers, correct_answers_index)), k=3)
+# lista de tuples que tiene pregunta, respuestas posibles e índice de la respuesta correcta (sin repetición)
+questions_to_ask = random.sample(list(zip(questions, answers, correct_answers_index)), k=3)
 
 score = 0.0
 
