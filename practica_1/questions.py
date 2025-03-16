@@ -1,4 +1,3 @@
-python
 import random
 
 # Preguntas para el juego
@@ -37,9 +36,16 @@ for _ in range(3):
 
     # El usuario tiene 2 intentos para responder correctamente
     for intento in range(2):
-        user_answer = int(input("Respuesta: ")) - 1
+        user_answer = input("Respuesta: ")
+        
+        # Se verifica que la respuesta sea válida
+        user_answer = user_answer.strip() #ignoramos trailing o leading spaces
+        if(not user_answer.isnumeric() or int(user_answer) > len(answers[question_index])):
+            print("Respuesta no válida")
+            exit(1)
+        
         # Se verifica si la respuesta es correcta
-        if user_answer == correct_answers_index[question_index]:
+        if int(user_answer)-1 == correct_answers_index[question_index]:
             print("¡Correcto!")
             break
     else:
