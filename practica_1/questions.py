@@ -1,3 +1,4 @@
+python
 import random
 
 # Preguntas para el juego
@@ -8,7 +9,6 @@ questions = [
     "¿Cuál de las siguientes expresiones es un comentario válido en Python?",
     "¿Cuál es el operador de comparación para verificar si dos valores son iguales?",
 ]
-
 # Respuestas posibles para cada pregunta, en el mismo orden que las preguntas
 answers = [
     ("size()", "len()", "length()", "count()"),
@@ -26,9 +26,6 @@ answers = [
 correct_answers_index = [1, 2, 0, 3, 1]
 
 # El usuario deberá contestar 3 preguntas
-
-score = 0.0
-
 for _ in range(3):
     # Se selecciona una pregunta aleatoria
     question_index = random.randint(0, len(questions) - 1)
@@ -40,20 +37,11 @@ for _ in range(3):
 
     # El usuario tiene 2 intentos para responder correctamente
     for intento in range(2):
-        user_answer = input("Respuesta: ")
-        
-        try: user_answer = int(user_answer)-1
-        except ValueError:
-	        print("Respuesta no válida")
-	        exit(1)
-		
+        user_answer = int(input("Respuesta: ")) - 1
         # Se verifica si la respuesta es correcta
         if user_answer == correct_answers_index[question_index]:
             print("¡Correcto!")
-            score += 1
             break
-        else:
-            score -= 0.5
     else:
         # Si el usuario no responde correctamente después de 2 intentos,
         # se muestra la respuesta correcta
@@ -62,5 +50,3 @@ for _ in range(3):
 
     # Se imprime un blanco al final de la pregunta
     print()
-
-print("Tu puntaje es de", score)
