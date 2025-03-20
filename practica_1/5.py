@@ -1,19 +1,15 @@
-import sys
-
 nums = []
-x = ''
+user_input = ''
 
 while(True):
-	x = input("Ingrese un número (0 para terminar): ")
-	
-	try: x = int(x)
-	except ValueError: continue
-	
-	if(x != 0): nums.append(x)
-	else: break
+	user_input = input("Ingrese un número (0 para terminar): ")
+	if((user_input[0] == '-' and user_input[1::].isnumeric()) or user_input.isnumeric()):
+		user_input = int(user_input)
+		if(user_input == 0): break
+		nums.append(user_input)
 
 print("Los números ingresados son: ")
-for i in nums:
-	if(i<0): break
-	print(i)
+for num in nums:
+	if(num<0): break
+	print(num)
 

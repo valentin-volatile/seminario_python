@@ -1,6 +1,5 @@
-import sys
-
 edad = ''
+
 while(not edad.isnumeric()):
 	edad = input("Ingrese su edad: ")
 	

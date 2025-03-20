@@ -1,7 +1,4 @@
-import sys
-
-suma = 0;
-
+suma = 0
 for i in range(1, 101):
 	suma += i
 

@@ -1,16 +1,10 @@
-import sys
-
 nums = []
-x = ''
+user_input = ''
 
-while(True):
-	x = input("Ingrese un número (0 para terminar): ")
-	try: x = int(x)
-	except ValueError: continue
-	
-	if(x == 0): break;
-	nums.append(x)
-	
+while(not user_input.isnumeric() or (int(user_input) != 0)):
+	user_input = input("Ingrese un número entero positivo (0 para terminar): ")
+	if(user_input.isnumeric() and (int(user_input) != 0)):
+		nums.append(int(user_input))
 
 pares = [i for i in nums if i%2 == 0]
 impares = [i for i in nums if i%2 == 1]
