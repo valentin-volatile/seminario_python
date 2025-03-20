@@ -15,15 +15,19 @@ while(True):
 		print(f"{i+1}. {prompt}")
 	print(separador)
 	
-	# Se intenta registrar la elección del usuario, valores no válidos son manejados por el wildcard del match
-	try: op = int(input())
-	except ValueError: pass
-
-	match op:
+	# Se intenta registrar la elección del usuario
+	user_input = input()
+	if(not user_input.isnumeric() or int(user_input)>len(operaciones)):
+		print("Elección no valida, intente de nuevo\n")
+		continue
+	
+	user_input = int(user_input)
+	
+	match user_input:
 		case 1:
 			nombre = input("Ingrese el nombre del producto a agregar: ")
-			try : cant = int(input("Ingrese la cantidad inicial: "))
-			except ValueError:
+			cant = input("Ingrese la cantidad inicial: ")
+			if(not cant.isnumeric()):
 				print("Cantidad no válida. No se realizaron cambios\n")
 				continue
 				
@@ -46,5 +50,4 @@ while(True):
 			print()
 		case 4:
 			exit("Programa terminado por el usuario")
-		case _: 
-			print("Elección no valida, intente de nuevo\n")
+
