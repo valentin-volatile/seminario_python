@@ -35,3 +35,19 @@ def validate_username(username):
 	if(not username.isalnum()): return False 
 
 	return True
+
+
+def get_keyword_count(descriptions, keywords):
+	cant_dict = {}
+	
+	# inicializo de forma explicita cada par clave/valor
+	for keyword in keywords:
+		cant_dict[keyword.lower()] = 0;
+	
+	for desc in descriptions:
+		words = desc.lower().split() # se pasa a minuscula y se separa en palabras
+		for word in words:
+			if word in cant_dict:
+				cant_dict[word] += 1
+				
+	return cant_dict
