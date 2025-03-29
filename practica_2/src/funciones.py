@@ -9,3 +9,12 @@ def get_longest_title(titles):
 			max_title = title;
 			
 	return max_title
+	
+
+def search_matching_rules(rules, keyword):
+	matching = []
+	
+	for rule in rules.split(".\n"):
+		if(keyword in rule): matching.append(rule)
+		
+	return matching
