@@ -65,3 +65,8 @@ def generate_discount_code(username, date, length = 30):
 	
 	return code
 	
+
+def check_anagram(word1, word2):
+	word1 = "".join(sorted(word1.lower()))
+	word2 = "".join(sorted(word2.lower()))
+	return word1 == word2
