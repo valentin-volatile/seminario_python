@@ -1,3 +1,6 @@
+import string
+import random
+
 def get_longest_title(titles):
 	max_words = 0
 	max_title = ""
@@ -51,3 +54,14 @@ def get_keyword_count(descriptions, keywords):
 				cant_dict[word] += 1
 				
 	return cant_dict
+
+
+def generate_discount_code(username, date, length = 30):
+	valid_chars = string.ascii_uppercase + string.digits;
+	
+	code = username.upper() + '-' 
+	code += "".join(c for c in date.split('-')) + '-';
+	code += "".join(c for c in random.sample(valid_chars, k = length-len(code)))
+	
+	return code
+	
