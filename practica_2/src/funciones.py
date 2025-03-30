@@ -70,3 +70,23 @@ def check_anagram(word1, word2):
 	word1 = "".join(sorted(word1.lower()))
 	word2 = "".join(sorted(word2.lower()))
 	return word1 == word2
+
+
+def clean_client_list(clients):
+	# set para evitar repetidos
+	clean_list = set()
+	
+	for client in clients:
+		# no agrego None
+		if(client == None): continue;
+		
+		client = client.strip()
+		# no agrego string vacía
+		if(client == ""): continue;
+		
+		# pongo primera letra de cada palabra en mayus
+		client = string.capwords(client);
+		
+		clean_list.add(client);
+	
+	return sorted(clean_list)
