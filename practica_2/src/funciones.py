@@ -69,24 +69,53 @@ def generate_discount_code(username, date, length = 30):
 def check_anagram(word1, word2):
 	word1 = "".join(sorted(word1.lower()))
 	word2 = "".join(sorted(word2.lower()))
+	
 	return word1 == word2
 
 
-def clean_client_list(clients):
-	# set para evitar repetidos
-	clean_list = set()
+def remove_duplicates(clients):
+	def make_key_from_name(name):
+		name = name.lower()
+		name = name.replace('á', 'a')
+		name = name.replace('é', 'e')
+		name = name.replace('í', 'i')
+		name = name.replace('ó', 'o')
+		name = name.replace('ú', 'u')
 	
-	for client in clients:
-		# no agrego None
-		if(client == None): continue;
-		
-		client = client.strip()
-		# no agrego string vacía
-		if(client == ""): continue;
-		
-		# pongo primera letra de cada palabra en mayus
-		client = string.capwords(client);
-		
-		clean_list.add(client);
+		return name
 	
-	return sorted(clean_list)
+	# por el código ASCII, nombres con tilde quedan antes (al invertir el orden) que nombres iguales sin tilde
+	clients.sort()
+	clients.reverse()
+	
+	# creo copia de la lista para no eliminar mientras itero sobre la original
+	clients_copy = clients[:]
+	already_added = []
+	
+	for client in clients_copy:
+		# elimino nombres repetidos de la lista original
+		if(make_key_from_name(client) in already_added):
+			clients.remove(client)
+		else:
+			already_added.append(make_key_from_name(client))
+	
+	clients.sort()
+ 
+ 
+def remove_extra_spaces(clients):
+	for i in range(len(clients)):
+		if(type(clients[i]) is str): clients[i] = clients[i].strip();
+
+
+def format_names(clients):
+	for i in range(len(clients)):
+		if(type(clients[i]) is str): clients[i] = clients[i].title();
+	
+	
+def remove_empty_names(clients):
+	# creo copia de la lista para no eliminar mientras itero sobre la original
+	clients_copy = clients[:]
+	
+	for client in clients_copy:
+		if(client is None or client.strip() == ""):
+			clients.remove(client)
