@@ -1,6 +1,7 @@
 import string
 import random
 
+# Ejercicio 2
 def get_longest_title(titles):
 	max_words = 0
 	max_title = ""
@@ -14,6 +15,7 @@ def get_longest_title(titles):
 	return max_title
 	
 
+# Ejercicio 3
 def search_matching_rules(rules, keyword):
 	matching = []
 	
@@ -23,6 +25,7 @@ def search_matching_rules(rules, keyword):
 	return matching
 
 
+# Ejercicio 4
 def validate_username(username):
 	#chequeo largo
 	if(len(username)<5): return False 
@@ -40,6 +43,7 @@ def validate_username(username):
 	return True
 
 
+# Ejercicio 6
 def get_keyword_count(descriptions, keywords):
 	cant_dict = {}
 	
@@ -56,6 +60,7 @@ def get_keyword_count(descriptions, keywords):
 	return cant_dict
 
 
+# Ejercicio 7
 def generate_discount_code(username, date, length = 30):
 	valid_chars = string.ascii_uppercase + string.digits;
 	
@@ -64,8 +69,9 @@ def generate_discount_code(username, date, length = 30):
 	code += "".join(c for c in random.sample(valid_chars, k = length-len(code)))
 	
 	return code
-	
 
+
+# Ejercicio 8
 def check_anagram(word1, word2):
 	word1 = "".join(sorted(word1.lower()))
 	word2 = "".join(sorted(word2.lower()))
@@ -73,6 +79,7 @@ def check_anagram(word1, word2):
 	return word1 == word2
 
 
+# Ejercicio 9
 def remove_duplicates(clients):
 	def make_key_from_name(name):
 		name = name.lower()
@@ -81,7 +88,6 @@ def remove_duplicates(clients):
 		name = name.replace('í', 'i')
 		name = name.replace('ó', 'o')
 		name = name.replace('ú', 'u')
-	
 		return name
 	
 	# por el código ASCII, nombres con tilde quedan antes (al invertir el orden) que nombres iguales sin tilde
@@ -119,3 +125,64 @@ def remove_empty_names(clients):
 	for client in clients_copy:
 		if(client is None or client.strip() == ""):
 			clients.remove(client)
+
+
+# Ejercicio 10
+def get_blank_score_data(ronda):
+	players = list(ronda.keys())
+	fields = ["kills", "assists", "deaths", "cant_MVP", "score"]
+	score_data = {}
+	
+	for player in players:
+		score_data[player] = {}
+		for field in fields:
+			score_data[player][field] = 0
+	
+	return score_data
+
+
+def update_scores(score_data, ronda, kill_value=3, assist_value=1, death_value =-1):
+	values = {"kills": kill_value, "assists": assist_value, "deaths": death_value}
+	
+	max_score = -999
+	MVP = ""
+	
+	for player, actions in ronda.items():
+		score_this_round = 0
+		
+		for action, cant in actions.items():
+			score_data[player][action] += cant
+			score_this_round += cant*values[action];
+		
+		if(score_this_round > max_score):
+			max_score = score_this_round
+			MVP = player
+
+		score_data[player]["score"] += score_this_round
+	
+	score_data[MVP]["cant_MVP"] += 1
+
+
+def print_scores(score_data):
+	
+	# obtengo jugadores y los ordeno según sus puntos
+	players = list(score_data.keys())
+	players.sort(key=lambda player:score_data[player]["score"], reverse=True)
+	
+	largo = 20 # lo que mide cada "celda"
+	column_titles = ["Jugador", "Kills", "Asistencias", "Muertes", "MVPs", "Puntos"]
+	separador = "-"*(len(column_titles)*largo)
+	
+	
+	print(separador)
+	for title in column_titles:
+		print(f"{title:^{largo}}", end="") # ^x -> centra la string, que ocupa x caracteres
+	print("\n"+separador)
+	
+	for player in players:
+		print(f"{player:^{largo}}", end="")
+		for value in score_data[player].values():
+			print(f"{value:^{largo}}", end="") 
+		print()
+	
+	print()
