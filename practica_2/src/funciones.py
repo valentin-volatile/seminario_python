@@ -141,35 +141,33 @@ def get_blank_score_data(ronda):
 	return score_data
 
 
-def update_scores(score_data, ronda, kill_value=3, assist_value=1, death_value =-1):
+def update_scores(score_data, ronda, kill_value=3, assist_value=1, death_value=-1):
 	values = {"kills": kill_value, "assists": assist_value, "deaths": death_value}
 	
-	max_score = -999
-	MVP = ""
+	# para posterior cálculo de MVP
+	points_earned = {}
 	
 	for player, actions in ronda.items():
-		score_this_round = 0
+		points = 0
 		
 		for action, cant in actions.items():
 			score_data[player][action] += cant
-			score_this_round += cant*values[action];
+			points += cant*values[action];
 		
-		if(score_this_round > max_score):
-			max_score = score_this_round
-			MVP = player
-
-		score_data[player]["score"] += score_this_round
+		points_earned[player] = points;
+		score_data[player]["score"] += points
+	
+	MVP = max(points_earned, key = lambda player:points_earned[player])
 	
 	score_data[MVP]["cant_MVP"] += 1
 
 
 def print_scores(score_data):
-	
 	# obtengo jugadores y los ordeno según sus puntos
 	players = list(score_data.keys())
 	players.sort(key=lambda player:score_data[player]["score"], reverse=True)
 	
-	largo = 20 # lo que mide cada "celda"
+	largo = 18 # lo que mide cada "celda" en caracteres, número arbitrario
 	column_titles = ["Jugador", "Kills", "Asistencias", "Muertes", "MVPs", "Puntos"]
 	separador = "-"*(len(column_titles)*largo)
 	
@@ -184,5 +182,4 @@ def print_scores(score_data):
 		for value in score_data[player].values():
 			print(f"{value:^{largo}}", end="") 
 		print()
-	
 	print()
